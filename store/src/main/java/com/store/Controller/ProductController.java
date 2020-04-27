@@ -20,21 +20,11 @@ public class ProductController {
     }
 
     @RequestMapping(value = "/addProduct", method = RequestMethod.POST)
-    public Product addNewProduct (@RequestParam (value = "name")  String name,
-                                  @RequestParam  (value = "quantity") int quantity,
-                                   @RequestParam  (value = "price") int price,
-                                  @RequestParam (value = "manufactor") Manufactor manufactor,
-                                  @RequestParam (value = "category") Category category ) {
-        Product product = new Product();
-        product.setName(name);
-        product.setQuantity(quantity);
-        product.setPrice(price);
-        product.setManufactor(manufactor);
-        product.setCategory(category);
+    public Product addNewProduct (@RequestBody Product product ) {
+
         return productRepository.save(product);
     }
-
-
+    
     @RequestMapping(value = "/deleteProduct/{id}", method = RequestMethod.DELETE)
     public ResponseEntity<?> deleteProduct(@PathVariable("id") int id) {
         return productRepository.findById(id)

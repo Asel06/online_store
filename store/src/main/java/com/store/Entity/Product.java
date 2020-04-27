@@ -21,12 +21,12 @@ public class Product {
     @Min(0)
     private int price;
 
-    @ManyToOne()
-    @JoinColumn(name="manufactor",  referencedColumnName = "id", insertable = false, updatable = false)
+    @ManyToOne(fetch = FetchType.EAGER, optional = false)
+    @JoinColumn(name="manufactor",  referencedColumnName = "id")
     private Manufactor manufactor;
 
-    @ManyToOne()
-    @JoinColumn(name="category",  referencedColumnName = "id", insertable = false, updatable = false)
+    @ManyToOne(fetch = FetchType.EAGER, optional = false)
+    @JoinColumn(name="category",  referencedColumnName = "id")
     private Category category;
 
     public int getId() {
