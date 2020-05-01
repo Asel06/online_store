@@ -1,15 +1,12 @@
-package com.store.Controller;
+package com.store.controller;
 
-import com.store.Entity.*;
-import com.store.Repository.UserRepository;
+import com.store.entity.*;
+import com.store.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Set;
 
 @RestController
 @RequestMapping(path = "/user")
@@ -23,17 +20,16 @@ public class UserController {
     }
 
     @RequestMapping(value = "/addUser", method = RequestMethod.POST)
-    public User addNewUser (@RequestParam(value = "login")  String login,
-                                  @RequestParam  (value = "password") String password,
-                                  @RequestParam  (value = "phone") int phone,
-                                  @RequestParam (value = "address") List<Address> address,
-                                  @RequestParam (value = "role") Role role ) {
-        User user = new User();
-        user.setLogin(login);
-        user.setPassword(password);
-        user.setPhone(phone);
-        user.setAddress(address);
-        user.setRole(role);
+    public User addNewUser (@RequestBody User user) {
         return userRepository.save(user);
+    }
+
+    @RequestMapping(value = "/deleteUser/{id}", method = RequestMethod.DELETE)
+    public ResponseEntity<?> deleteUser(@PathVariable("id") int id) {
+        return userRepository.findById(id)
+                .map(record -> {
+                    userRepository.deleteById(id);
+                    return ResponseEntity.ok().build();
+                }).orElse(ResponseEntity.notFound().build());
     }
 }

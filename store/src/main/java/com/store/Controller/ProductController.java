@@ -1,9 +1,9 @@
-package com.store.Controller;
+package com.store.controller;
 
-import com.store.Entity.Category;
-import com.store.Entity.Manufactor;
-import com.store.Entity.Product;
-import com.store.Repository.ProductRepository;
+import com.store.entity.Product;
+import com.store.entity.ProductForm;
+import com.store.repository.ProductRepository;
+import com.store.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 public class ProductController {
     @Autowired
     private ProductRepository productRepository;
+    private ProductService productService;
 
     @RequestMapping(value = "/allProduct", method = RequestMethod.GET)
     public Iterable<Product> getAllProduct() {
@@ -20,11 +21,10 @@ public class ProductController {
     }
 
     @RequestMapping(value = "/addProduct", method = RequestMethod.POST)
-    public Product addNewProduct (@RequestBody Product product ) {
-
-        return productRepository.save(product);
+    public Product addNewProduct (@RequestBody ProductForm product ) {
+        return productService.register(product);
     }
-    
+
     @RequestMapping(value = "/deleteProduct/{id}", method = RequestMethod.DELETE)
     public ResponseEntity<?> deleteProduct(@PathVariable("id") int id) {
         return productRepository.findById(id)
@@ -34,10 +34,9 @@ public class ProductController {
                 }).orElse(ResponseEntity.notFound().build());
     }
 
-
     @RequestMapping(value = "/updateProduct/{id}", method = RequestMethod.PUT)
     public ResponseEntity<Product> updateProduct(@PathVariable("id") int id,
-                                                  @RequestBody Product product) {
+                                                 @RequestBody Product product) {
         return productRepository.findById(id)
                 .map(record -> {
                     record.setName(product.getName());

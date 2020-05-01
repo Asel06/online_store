@@ -1,5 +1,4 @@
-package com.store.Entity;
-
+package com.store.entity;
 
 import javax.persistence.*;
 
@@ -13,4 +12,20 @@ public class Payment {
 
     @Column(name = "method", nullable = false)
     private String method;
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getMethod() {
+        return method;
+    }
+
+    public void setMethod(String method) {
+        this.method = method;
+    }
 }

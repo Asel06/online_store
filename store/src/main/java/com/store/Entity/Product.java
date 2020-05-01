@@ -1,7 +1,8 @@
-package com.store.Entity;
+package com.store.entity;
 
 import javax.persistence.*;
 import javax.validation.constraints.*;
+import java.util.Optional;
 
 @Entity
 @Table (name = "product", schema = "store")
@@ -76,4 +77,5 @@ public class Product {
     public void setCategory(Category category) {
         this.category = category;
     }
+
 }

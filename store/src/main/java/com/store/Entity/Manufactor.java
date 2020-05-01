@@ -1,7 +1,7 @@
-package com.store.Entity;
+package com.store.entity;
 
 import javax.persistence.*;
-import javax.validation.constraints.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -15,8 +15,8 @@ public class Manufactor {
     @Column(name = "title", nullable = false)
     private String title;
 
-    @OneToMany(mappedBy = "manufactor", cascade = CascadeType.ALL)
-    private List<Product> product;
+    @OneToMany(mappedBy = "manufactor")
+    List<Product> product = new ArrayList<>();
 
     public int getId() {
         return id;

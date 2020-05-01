@@ -1,7 +1,6 @@
-package com.store.Entity;
+package com.store.entity;
 
 import javax.persistence.*;
-import javax.validation.constraints.*;
 
 @Entity
 @Table (name = "role", schema = "store")

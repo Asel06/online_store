@@ -1,9 +1,7 @@
-package com.store.Entity;
+package com.store.entity;
 
 import javax.persistence.*;
-import javax.validation.constraints.*;
 import java.util.List;
-import java.util.Set;
 
 @Entity
 @Table (name = "user", schema = "store")
