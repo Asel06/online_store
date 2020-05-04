@@ -16,7 +16,7 @@ public class Manufactor {
     private String title;
 
     @OneToMany(mappedBy = "manufactor")
-    List<Product> product = new ArrayList<>();
+    List<Product> product = new ArrayList<Product>();
 
     public int getId() {
         return id;
@@ -32,5 +32,13 @@ public class Manufactor {
 
     public void setTitle(String title) {
         this.title = title;
+    }
+
+    public List<Product> getProduct() {
+        return product;
+    }
+
+    public void setProduct(List<Product> product) {
+        this.product = product;
     }
 }

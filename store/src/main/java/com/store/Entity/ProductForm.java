@@ -4,8 +4,8 @@ public class ProductForm {
     private String name;
     private int price;
     private int quantity;
-    private int manufactor;
-    private int category;
+    private int manufactorId;
+    private int categoryId;
 
     public String getName() {
         return name;
@@ -31,19 +31,19 @@ public class ProductForm {
         this.quantity = quantity;
     }
 
-    public int getManufactor() {
-        return manufactor;
+    public int getManufactorId() {
+        return manufactorId;
     }
 
-    public void setManufactor(int manufactor) {
-        this.manufactor = manufactor;
+    public void setManufactorId(int manufactorId) {
+        this.manufactorId = manufactorId;
     }
 
-    public int getCategory() {
-        return category;
+    public int getCategoryId() {
+        return categoryId;
     }
 
-    public void setCategory(int category) {
-        this.category = category;
+    public void setCategoryId(int categoryId) {
+        this.categoryId = categoryId;
     }
 }

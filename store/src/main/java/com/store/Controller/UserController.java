@@ -2,6 +2,8 @@ package com.store.controller;
 
 import com.store.entity.*;
 import com.store.repository.UserRepository;
+import com.store.service.AddressService;
+import com.store.service.RoleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -13,14 +15,25 @@ import java.util.List;
 public class UserController {
     @Autowired
     private UserRepository userRepository;
+    @Autowired
+    AddressService addressService;
+    @Autowired
+    RoleService roleService;
 
     @RequestMapping(value = "/allUser", method = RequestMethod.GET)
     public Iterable<User> getAllUser() {
         return userRepository.findAll();
     }
 
+
     @RequestMapping(value = "/addUser", method = RequestMethod.POST)
-    public User addNewUser (@RequestBody User user) {
+    public User addNewUser (@RequestBody UserForm form ) {
+        User user = new User();
+        user.setLogin(form.getLogin());
+        user.setPassword(form.getPassword());
+        user.setPhone(form.getPhone());
+        user.setAddress(addressService.findById(form.getAddress()));
+        user.setRole(roleService.findById(form.getRole()));
         return userRepository.save(user);
     }
 

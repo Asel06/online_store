@@ -1,6 +1,7 @@
 package com.store.entity;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -18,7 +19,7 @@ public class Category {
     private int parent;
 
     @OneToMany(mappedBy = "category")
-    private List<Product> product;
+    List<Product> product = new ArrayList<Product>();
 
     public int getId() {
         return id;
@@ -42,5 +43,13 @@ public class Category {
 
     public void setParent(int parent) {
         this.parent = parent;
+    }
+
+    public List<Product> getProduct() {
+        return product;
+    }
+
+    public void setProduct(List<Product> product) {
+        this.product = product;
     }
 }

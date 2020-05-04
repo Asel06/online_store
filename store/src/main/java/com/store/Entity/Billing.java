@@ -10,9 +10,35 @@ public class Billing {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @Column(name = "user_id", nullable = false)
-    private int userId;
+    @OneToOne(fetch = FetchType.EAGER, optional = false)
+    @JoinColumn(name="user_id",  referencedColumnName = "id")
+    private User user;
 
-    @Column(name = "address", nullable = false)
-    private int address;
+    @OneToOne(fetch = FetchType.EAGER, optional = false)
+    @JoinColumn(name="address",  referencedColumnName = "id")
+    private Address address;
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public Address getAddress() {
+        return address;
+    }
+
+    public void setAddress(Address address) {
+        this.address = address;
+    }
 }

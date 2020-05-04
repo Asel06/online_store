@@ -3,7 +3,8 @@ package com.store.controller;
 import com.store.entity.Product;
 import com.store.entity.ProductForm;
 import com.store.repository.ProductRepository;
-import com.store.service.ProductService;
+import com.store.service.CategoryService;
+import com.store.service.ManufactorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -13,7 +14,10 @@ import org.springframework.web.bind.annotation.*;
 public class ProductController {
     @Autowired
     private ProductRepository productRepository;
-    private ProductService productService;
+    @Autowired
+    ManufactorService manufactorService;
+    @Autowired
+    CategoryService categoryService;
 
     @RequestMapping(value = "/allProduct", method = RequestMethod.GET)
     public Iterable<Product> getAllProduct() {
@@ -21,8 +25,14 @@ public class ProductController {
     }
 
     @RequestMapping(value = "/addProduct", method = RequestMethod.POST)
-    public Product addNewProduct (@RequestBody ProductForm product ) {
-        return productService.register(product);
+    public Product addNewProduct (@RequestBody ProductForm form ) {
+        Product product = new Product();
+        product.setName(form.getName());
+        product.setQuantity(form.getQuantity());
+        product.setPrice(form.getPrice());
+        product.setManufactor(manufactorService.findById(form.getManufactorId()));
+        product.setCategory(categoryService.findById(form.getCategoryId()));
+        return productRepository.save(product);
     }
 
     @RequestMapping(value = "/deleteProduct/{id}", method = RequestMethod.DELETE)

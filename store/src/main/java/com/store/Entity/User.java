@@ -1,6 +1,7 @@
 package com.store.entity;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -20,11 +21,12 @@ public class User {
     @Column(name = "phone", nullable = false)
     private int phone;
 
-    @OneToMany()
-    private List<Address> address;
+    @ManyToOne(fetch = FetchType.EAGER, optional = false)
+    @JoinColumn(name="address",  referencedColumnName = "id")
+    private Address address;
 
-    @OneToOne()
-    @JoinColumn(name="id")
+    @ManyToOne(fetch = FetchType.EAGER, optional = false)
+    @JoinColumn(name="role",  referencedColumnName = "id")
     private Role role;
 
     public int getId() {
@@ -59,11 +61,11 @@ public class User {
         this.phone = phone;
     }
 
-    public List<Address> getAddress() {
+    public Address getAddress() {
         return address;
     }
 
-    public void setAddress(List<Address> address) {
+    public void setAddress(Address address) {
         this.address = address;
     }
 
