@@ -5,6 +5,7 @@ import com.store.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+
 @Service
 public class UserService {
 @Autowired
@@ -12,4 +13,5 @@ public class UserService {
     public User findById(Integer id){
         return userRepository.findById(id).orElse(null);
     }
+
 }

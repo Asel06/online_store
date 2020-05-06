@@ -37,6 +37,18 @@ public class UserController {
         return userRepository.save(user);
     }
 
+    @RequestMapping(value = "/authorization", method = RequestMethod.POST)
+    public String authorization(@RequestBody UserAuthorization userAuthorization) {
+        User user = getByLogin(userAuthorization.getLogin());
+        if (user == null) {return "Not user with this login was found";}
+        if (user.getPassword().equals(userAuthorization.getPassword())) {return "Authorization was successful!";}
+        else {return "Password is wrong";}
+    }
+
+    public User getByLogin(String login) {
+        return userRepository.getByLogin(login).orElse(null);
+    }
+
     @RequestMapping(value = "/deleteUser/{id}", method = RequestMethod.DELETE)
     public ResponseEntity<?> deleteUser(@PathVariable("id") int id) {
         return userRepository.findById(id)
