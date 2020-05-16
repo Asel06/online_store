@@ -1,7 +1,7 @@
 package com.store.controller;
 
 import com.store.entity.Billing;
-import com.store.entity.BillingForm;
+import com.store.model.BillingForm;
 import com.store.repository.BillingRepository;
 import com.store.service.AddressService;
 import com.store.service.UserService;
@@ -13,11 +13,11 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping(path = "/billing")
 public class BillingController {
     @Autowired
-    BillingRepository billingRepository;
+    private BillingRepository billingRepository;
     @Autowired
-    UserService userService;
+    private UserService userService;
     @Autowired
-    AddressService addressService;
+    private AddressService addressService;
 
     @RequestMapping(value = "/allBilling", method = RequestMethod.GET)
     public Iterable<Billing> getAllBilling() {
@@ -32,8 +32,8 @@ public class BillingController {
         return billingRepository.save(billing);
     }
 
-    @RequestMapping(value = "/deleteCart/{id}", method = RequestMethod.DELETE)
-    public ResponseEntity<?> deleteCart(@PathVariable("id") int id) {
+    @RequestMapping(value = "/deleteBilling/{id}", method = RequestMethod.DELETE)
+    public ResponseEntity<?> deleteBilling(@PathVariable("id") int id) {
         return billingRepository.findById(id)
                 .map(record -> {
                     billingRepository.deleteById(id);

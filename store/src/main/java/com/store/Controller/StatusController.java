@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping(path = "/status")
 public class StatusController {
     @Autowired
-    StatusRepository statusRepository;
+    private StatusRepository statusRepository;
 
     @RequestMapping(value = "/allStatus", method = RequestMethod.GET)
     public Iterable<Status> getAllStatus() {

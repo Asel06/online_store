@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping(path = "/payment")
 public class PaymentController {
     @Autowired
-    PaymentRepository paymentRepository;
+    private PaymentRepository paymentRepository;
 
     @RequestMapping(value = "/allPayment", method = RequestMethod.GET)
     public Iterable<Payment> getAllPayment() {
@@ -24,12 +24,11 @@ public class PaymentController {
     }
 
     @RequestMapping(value = "/updatePayment/{id}", method = RequestMethod.PUT)
-    public ResponseEntity<Payment> updateStatus(@PathVariable("id") int id,
+    public ResponseEntity<Payment> updatePayment(@PathVariable("id") int id,
                                                @RequestBody Payment payment) {
         return paymentRepository.findById(id)
                 .map(record -> {
                     record.setMethod(payment.getMethod());
-
                     Payment updated = paymentRepository.save(payment);
                     return ResponseEntity.ok().body(updated);
                 }).orElse(ResponseEntity.notFound().build());

@@ -14,9 +14,9 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping(path = "/category")
 public class CategoryController {
     @Autowired
-    CategoryRepository categoryRepository;
+    private CategoryRepository categoryRepository;
     @Autowired
-    CategoryService categoryService;
+    private CategoryService categoryService;
 
     @RequestMapping(value = "/addCategory", method = RequestMethod.POST)
     public Category addNewCategory (@RequestBody Category category ) {

@@ -1,9 +1,7 @@
 package com.store.controller;
 
 import com.store.entity.OrderItem;
-import com.store.entity.OrderItemForm;
-import com.store.entity.Product;
-import com.store.entity.ProductForm;
+import com.store.model.OrderItemForm;
 import com.store.repository.OrderItemRepository;
 import com.store.service.OrderService;
 import com.store.service.ProductService;
@@ -15,11 +13,11 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping(path = "/orderitem")
 public class OrderItemController {
     @Autowired
-    OrderItemRepository orderItemRepository;
+    private OrderItemRepository orderItemRepository;
     @Autowired
-    OrderService orderService;
+    private OrderService orderService;
     @Autowired
-    ProductService productService;
+    private ProductService productService;
 
     @RequestMapping(value = "/allOrderItem", method = RequestMethod.GET)
     public Iterable<OrderItem> getAllOrderItem() {

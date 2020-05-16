@@ -1,6 +1,8 @@
 package com.store.entity;
 
 import javax.persistence.*;
+import java.util.Optional;
+import java.util.Set;
 
 @Entity
 @Table (name = "role", schema = "store")
@@ -13,8 +15,8 @@ public class Role {
     @Column(name = "title", nullable = false)
     private String title;
 
-    @OneToOne(mappedBy = "role")
-    private User user;
+    @OneToMany(mappedBy = "role")
+    private Set<User> user;
 
     public int getId() {
         return id;
@@ -31,4 +33,5 @@ public class Role {
     public void setTitle(String title) {
         this.title = title;
     }
+
 }

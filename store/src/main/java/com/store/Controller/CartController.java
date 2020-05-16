@@ -1,7 +1,7 @@
 package com.store.controller;
 
 import com.store.entity.Cart;
-import com.store.entity.CartForm;
+import com.store.model.CartForm;
 import com.store.repository.CartRepository;
 import com.store.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,9 +12,9 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping(path = "/cart")
 public class CartController {
     @Autowired
-    CartRepository cartRepository;
+    private CartRepository cartRepository;
     @Autowired
-    UserService userService;
+    private UserService userService;
 
     @RequestMapping(value = "/allCart", method = RequestMethod.GET)
     public Iterable<Cart> getAllCart() {

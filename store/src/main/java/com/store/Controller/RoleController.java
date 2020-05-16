@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping(path = "/role")
 public class RoleController {
     @Autowired
-    RoleRepository roleRepository;
+    private RoleRepository roleRepository;
 
     @RequestMapping(value = "/allRole", method = RequestMethod.GET)
     public Iterable<Role> getAllRole() {

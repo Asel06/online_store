@@ -10,11 +10,16 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping(path = "/address")
 public class AddressController {
     @Autowired
-    AddressRepository addressRepository;
+    private AddressRepository addressRepository;
 
     @RequestMapping(value = "/addAddress", method = RequestMethod.POST)
     public Address addNewAddress (@RequestBody Address address) {
         return addressRepository.save(address);
+    }
+
+    @RequestMapping(value = "/allAddress", method = RequestMethod.GET)
+    public Iterable<Address> getAllAddress() {
+        return addressRepository.findAll();
     }
 
     @RequestMapping(value = "/updateAddress/{id}", method = RequestMethod.PUT)

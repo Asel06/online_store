@@ -1,8 +1,7 @@
 package com.store.controller;
 
 import com.store.entity.Order;
-import com.store.entity.OrderForm;
-import com.store.entity.Product;
+import com.store.model.OrderForm;
 import com.store.repository.OrderRepository;
 import com.store.service.AddressService;
 import com.store.service.PaymentService;
@@ -15,13 +14,13 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping(path = "/order")
 public class OrderController {
     @Autowired
-    OrderRepository orderRepository;
+    private OrderRepository orderRepository;
     @Autowired
-    StatusService statusService;
+    private StatusService statusService;
     @Autowired
-    AddressService addressService;
+    private AddressService addressService;
     @Autowired
-    PaymentService paymentService;
+    private PaymentService paymentService;
 
     @RequestMapping(value = "/allOrder", method = RequestMethod.GET)
     public Iterable<Order> getAllOrder() {
@@ -38,8 +37,8 @@ public class OrderController {
         return orderRepository.save(order);
     }
 
-    @RequestMapping(value = "/deleteProduct/{id}", method = RequestMethod.DELETE)
-    public ResponseEntity<?> deleteProduct(@PathVariable("id") int id) {
+    @RequestMapping(value = "/deleteOrder/{id}", method = RequestMethod.DELETE)
+    public ResponseEntity<?> deleteOrder(@PathVariable("id") int id) {
         return orderRepository.findById(id)
                 .map(record -> {
                     orderRepository.deleteById(id);

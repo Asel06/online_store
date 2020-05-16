@@ -12,9 +12,9 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping(path = "/manufactor")
 public class ManufactorController {
     @Autowired
-    ManufactorRepository manufactorRepository;
+    private ManufactorRepository manufactorRepository;
     @Autowired
-    ManufactorService manufactorService;
+    private ManufactorService manufactorService;
 
     @RequestMapping(value = "/addManufactor", method = RequestMethod.POST)
     public Manufactor addNewManufactor (@RequestBody Manufactor manufactor ) {

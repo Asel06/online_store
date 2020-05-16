@@ -1,8 +1,8 @@
 package com.store.entity;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Collection;
+import java.util.Set;
 
 @Entity
 @Table (name = "user", schema = "store")
@@ -25,9 +25,20 @@ public class User {
     @JoinColumn(name="address",  referencedColumnName = "id")
     private Address address;
 
-    @ManyToOne(fetch = FetchType.EAGER, optional = false)
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinColumn(name="role",  referencedColumnName = "id")
-    private Role role;
+    private Set<Role> role;
+
+    public User() {}
+
+    public User(User user){
+        this.id = user.getId();
+        this.login = user.getLogin();
+        this.password = user.getPassword();
+        this.phone = user.getPhone();
+        this.address = user.getAddress();
+        this.role = user.getRole();
+    }
 
     public int getId() {
         return id;
@@ -69,11 +80,11 @@ public class User {
         this.address = address;
     }
 
-    public Role getRole() {
+    public Set<Role> getRole() {
         return role;
     }
 
-    public void setRole(Role role) {
+    public void setRole(Set<Role> role) {
         this.role = role;
     }
 }

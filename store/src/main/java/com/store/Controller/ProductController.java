@@ -1,7 +1,7 @@
 package com.store.controller;
 
 import com.store.entity.Product;
-import com.store.entity.ProductForm;
+import com.store.model.ProductForm;
 import com.store.repository.ProductRepository;
 import com.store.service.CategoryService;
 import com.store.service.ManufactorService;

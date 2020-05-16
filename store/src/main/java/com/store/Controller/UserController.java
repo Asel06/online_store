@@ -1,14 +1,19 @@
 package com.store.controller;
 
-import com.store.entity.*;
+import com.store.entity.Role;
+import com.store.entity.User;
+import com.store.model.CustomUserDetails;
+import com.store.model.UserForm;
 import com.store.repository.UserRepository;
 import com.store.service.AddressService;
 import com.store.service.RoleService;
+import com.store.service.UserDetailsServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
+import java.util.Set;
 
 @RestController
 @RequestMapping(path = "/user")
@@ -19,12 +24,15 @@ public class UserController {
     AddressService addressService;
     @Autowired
     RoleService roleService;
+    @Autowired
+    UserDetailsServiceImpl userDetailsService;
+
+    CustomUserDetails customUserDetails;
 
     @RequestMapping(value = "/allUser", method = RequestMethod.GET)
     public Iterable<User> getAllUser() {
         return userRepository.findAll();
     }
-
 
     @RequestMapping(value = "/addUser", method = RequestMethod.POST)
     public User addNewUser (@RequestBody UserForm form ) {
@@ -33,20 +41,20 @@ public class UserController {
         user.setPassword(form.getPassword());
         user.setPhone(form.getPhone());
         user.setAddress(addressService.findById(form.getAddress()));
-        user.setRole(roleService.findById(form.getRole()));
+        user.setRole((Set<Role>) roleService.findById(form.getRole()));
         return userRepository.save(user);
     }
 
     @RequestMapping(value = "/authorization", method = RequestMethod.POST)
-    public String authorization(@RequestBody UserAuthorization userAuthorization) {
-        User user = getByLogin(userAuthorization.getLogin());
-        if (user == null) {return "Not user with this login was found";}
-        if (user.getPassword().equals(userAuthorization.getPassword())) {return "Authorization was successful!";}
-        else {return "Password is wrong";}
-    }
-
-    public User getByLogin(String login) {
-        return userRepository.getByLogin(login).orElse(null);
+    public User authorization (@RequestBody UserForm form ) {
+        User user = (User) userDetailsService.loadUserByUsername(form.getLogin());
+        if (user != null && form.getPassword() == user.getPassword()){
+            UserDetails userDetails =
+                    new org.springframework.security.core.userdetails.User(user.getLogin(),
+                            user.getPassword(), customUserDetails.getAuthorities() );
+            return (User) userDetails;
+        }
+        return null;
     }
 
     @RequestMapping(value = "/deleteUser/{id}", method = RequestMethod.DELETE)
